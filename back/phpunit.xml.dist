@@ -15,6 +15,6 @@
         </include>
     </coverage>
     <logging>
-        <testdoxHtml output="php://stdout"/>
+        <testdoxHtml output="testdox.html"/>
     </logging>
 </phpunit>
