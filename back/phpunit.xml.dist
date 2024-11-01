@@ -14,4 +14,7 @@
             <directory>src</directory>
         </include>
     </coverage>
+    <logging>
+        <testdox output="php://stdout"/>
+    </logging>
 </phpunit>

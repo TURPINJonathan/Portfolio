@@ -16,6 +16,8 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.1.*",
         "symfony/runtime": "7.1.*",
+        "symfony/security-bundle": "7.1.*",
+        "symfony/validator": "7.1.*",
         "symfony/yaml": "7.1.*"
     },
     "config": {
@@ -58,7 +60,7 @@
             "@auto-scripts"
         ],
         "fix": "php-cs-fixer fix",
-        "test": "phpunit --bootstrap vendor/autoload.php tests",
+        "test": "phpunit --bootstrap vendor/autoload.php tests --testdox",
         "test-class": "phpunit --bootstrap vendor/autoload.php"
     },
     "conflict": {
