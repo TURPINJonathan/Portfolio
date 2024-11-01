@@ -66,7 +66,11 @@ jobs:
     - name: Run PHPStan
       working-directory: ./back
       run: make stan
-      
+    
+    - name: Run PHP-CS-Fixer
+      working-directory: ./back
+      run: make cs
+    
     #- name: Run tests
      # working-directory: ./back
       #run: php bin/phpunit
