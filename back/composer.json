@@ -61,6 +61,7 @@
         ],
         "fix": "php-cs-fixer fix",
         "test": "phpunit --bootstrap vendor/autoload.php tests --testdox",
+        "test-no-dox": "phpunit --bootstrap vendor/autoload.php tests",
         "test-class": "phpunit --bootstrap vendor/autoload.php"
     },
     "conflict": {
