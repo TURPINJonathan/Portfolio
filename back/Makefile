@@ -37,6 +37,9 @@ test: ## Run PHP CS Fixer with fix
 test-unit: ## Run PHP CS Fixer with fix
 	@composer test-class
 
+test-no-dox: ## Run PHP CS Fixer with fix
+	@composer test-no-dox
+
 ## CODING STANDARDS ##
 stan: ## Run PHPStan
 	@vendor/bin/phpstan analyse -c phpstan.dist.neon
