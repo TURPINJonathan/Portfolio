@@ -69,7 +69,7 @@ jobs:
     
     - name: Run PHP-CS-Fixer
       working-directory: ./back
-      run: make cs-fix
+      run: make cs
     
     #- name: Run tests
      # working-directory: ./back
