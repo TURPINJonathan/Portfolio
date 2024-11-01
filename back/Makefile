@@ -36,4 +36,7 @@ stan: ## Run PHPStan
 	@vendor/bin/phpstan analyse -c phpstan.dist.neon
 
 cs: ## Run PHP CS Fixer
+	@vendor/bin/php-cs-fixer fix --dry-run
+
+cs-fix: ## Run PHP CS Fixer with fix
 	@vendor/bin/php-cs-fixer fix
