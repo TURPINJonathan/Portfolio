@@ -31,6 +31,12 @@ migrate: ## Migrate database
 router: ## Show all routes
 	@php bin/console debug:router
 
+test: ## Run PHP CS Fixer with fix
+	@composer test
+
+test-unit: ## Run PHP CS Fixer with fix
+	@composer test-class
+
 ## CODING STANDARDS ##
 stan: ## Run PHPStan
 	@vendor/bin/phpstan analyse -c phpstan.dist.neon
