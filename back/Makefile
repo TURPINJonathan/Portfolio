@@ -34,3 +34,6 @@ router: ## Show all routes
 ## CODING STANDARDS ##
 stan: ## Run PHPStan
 	@vendor/bin/phpstan analyse -c phpstan.dist.neon
+
+cs: ## Run PHP CS Fixer
+	@vendor/bin/php-cs-fixer fix
