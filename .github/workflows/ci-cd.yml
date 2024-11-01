@@ -73,4 +73,4 @@ jobs:
     
     - name: Run tests
       working-directory: ./back
-      run: composer test
+      run: make test
