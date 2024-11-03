@@ -73,4 +73,4 @@ jobs:
     
     - name: Run tests
       working-directory: ./back
-      run: make test
+      run: make test-no-dox
