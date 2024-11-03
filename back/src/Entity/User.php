@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -17,14 +18,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['user:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
+    #[Groups(['user:read', 'user:write'])]
     private ?string $email = null;
 
     #[ORM\Column(type: 'json')]
+    #[Groups(['user:read', 'user:write'])]
     private array $roles = [];
 
     #[ORM\Column(type: 'string')]
@@ -36,14 +40,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
 
-    public function __construct(string $email, string $password, array $roles)
+    public function __construct(string $email, array $roles)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException('Invalid email format');
-        }
-
-        if (empty($password)) {
-            throw new InvalidArgumentException('Password cannot be empty');
         }
 
         foreach ($roles as $role) {
@@ -52,9 +52,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
 
-        $this->email    = $email;
-        $this->password = $password;
-        $this->roles    = $roles;
+        $this->email = $email;
+        $this->roles = $roles;
     }
 
     public function getId(): ?int

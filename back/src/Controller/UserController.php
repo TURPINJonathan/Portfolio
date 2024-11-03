@@ -5,28 +5,31 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/user')]
 class UserController extends AbstractController
 {
     #[Route('/list', name: 'app_user_list', methods: ['GET'])]
-    public function list(): Response
+    public function list(UserRepository $userRepository, SerializerInterface $serializer): JsonResponse
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path'    => 'src/Controller/UserController.php',
-        ]);
+        $users = $userRepository->findAll();
+        $data  = $serializer->serialize($users, 'json', ['groups' => 'user:read']);
+
+        return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
 
     #[Route('/create', name: 'app_user_create', methods: ['POST'])]
-    public function create(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): JsonResponse
+    public function create(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator, UserPasswordHasherInterface $passwordHasher): JsonResponse
     {
         $content = $request->getContent();
         if (!is_string($content)) {
@@ -48,7 +51,11 @@ class UserController extends AbstractController
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $user = new User($data['email'], $data['password'], $data['roles']);
+        $user = new User($data['email'], $data['roles']);
+
+        // Hash the password before setting it
+        $hashedPassword = $passwordHasher->hashPassword($user, $data['password']);
+        $user->setPassword($hashedPassword);
 
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
