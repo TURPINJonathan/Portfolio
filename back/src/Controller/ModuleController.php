@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Module;
@@ -40,14 +42,13 @@ class ModuleController extends AbstractController
         $entityManager->persist($module);
         $entityManager->flush();
 
-
         return $this->json([
             'message' => 'Module created successfully!',
-            'module'    => [
-                'id'    => $module->getId(),
+            'module'  => [
+                'id'   => $module->getId(),
                 'name' => $module->getName(),
                 'icon' => $module->getIcon(),
-            ]
+            ],
         ], Response::HTTP_CREATED);
     }
 
@@ -95,12 +96,10 @@ class ModuleController extends AbstractController
 
         $entityManager->flush();
 
-
-
         return $this->json([
             'message' => 'Module updated successfully!',
-            'module'    => [
-                'id'    => $module->getId(),
+            'module'  => [
+                'id'   => $module->getId(),
                 'name' => $module->getName(),
                 'icon' => $module->getIcon(),
             ],
