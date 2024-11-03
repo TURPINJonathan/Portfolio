@@ -98,7 +98,7 @@
         "test": "phpunit --bootstrap vendor/autoload.php tests --testdox",
         "test-no-dox": "phpunit --bootstrap vendor/autoload.php tests",
         "test-class": "phpunit --bootstrap vendor/autoload.php",
-        "load-fixtures": "php bin/console doctrine:fixtures:load"
+        "load-fixtures": "php bin/console doctrine:fixtures:load --append"
     },
     "conflict": {
         "symfony/symfony": "*"
