@@ -40,7 +40,7 @@ test-unit: ## Run PHP Unit with filter
 test-no-dox: ## Run PHP Unit without dox
 	@composer test-no-dox
 
-fictures: ## Run PHP Unit without dox
+fixtures: ## Run fixtures
 	@composer load-fixtures
 
 ## CODING STANDARDS ##
