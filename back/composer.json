@@ -40,6 +40,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.6",
         "friendsofphp/php-cs-fixer": "^3.64",
         "phpstan/phpstan": "^1.12",
         "phpunit/phpunit": "^9.6",
@@ -96,7 +97,8 @@
         "fix": "php-cs-fixer fix",
         "test": "phpunit --bootstrap vendor/autoload.php tests --testdox",
         "test-no-dox": "phpunit --bootstrap vendor/autoload.php tests",
-        "test-class": "phpunit --bootstrap vendor/autoload.php"
+        "test-class": "phpunit --bootstrap vendor/autoload.php",
+        "load-fixtures": "php bin/console doctrine:fixtures:load"
     },
     "conflict": {
         "symfony/symfony": "*"
