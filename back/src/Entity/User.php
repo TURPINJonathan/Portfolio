@@ -12,29 +12,22 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
     private ?string $email = null;
 
-    /**
-     * @var list<string> The user roles
-     */
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
+    #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
     #[Assert\Length(min: 8)]
     #[Assert\Regex(
@@ -43,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     private ?string $password = null;
 
-    public function __construct(string $email, string $password, string $role)
+    public function __construct(string $email, string $password, array $roles)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException('Invalid email format');
@@ -53,13 +46,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             throw new InvalidArgumentException('Password cannot be empty');
         }
 
-        if (!in_array($role, ['admin', 'user'])) {
-            throw new InvalidArgumentException('Invalid role');
+        foreach ($roles as $role) {
+            if (!in_array($role, ['ROLE_ADMIN', 'ROLE_USER'])) {
+                throw new InvalidArgumentException('Invalid role');
+            }
         }
 
         $this->email    = $email;
         $this->password = $password;
-        $this->roles    = [$role];
+        $this->roles    = $roles;
     }
 
     public function getId(): ?int
@@ -91,8 +86,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
-     *
-     * @return list<string>
      */
     public function getRoles(): array
     {
@@ -104,7 +97,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @param list<string> $roles
+     * Summary of setRoles
+     *
+     * @param array<string> $roles
      */
     public function setRoles(array $roles): static
     {
