@@ -31,11 +31,14 @@ migrate: ## Migrate database
 router: ## Show all routes
 	@php bin/console debug:router
 
-test: ## Run PHP CS Fixer with fix
+test: ## Run PHP Unit
 	@composer test
 
-test-unit: ## Run PHP CS Fixer with fix
+test-unit: ## Run PHP Unit with filter
 	@composer test-class
+
+test-no-dox: ## Run PHP Unit without dox
+	@composer test-no-dox
 
 ## CODING STANDARDS ##
 stan: ## Run PHPStan
