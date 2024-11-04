@@ -27,6 +27,7 @@ class ModuleController extends AbstractController
         $module = new Module();
         $module->setName($data['name']);
         $module->setIcon($data['icon']);
+        $module->setOptions($data['options'] ?? []);
 
         $errors = $validator->validate($module);
 
@@ -45,9 +46,10 @@ class ModuleController extends AbstractController
         return $this->json([
             'message' => 'Module created successfully!',
             'module'  => [
-                'id'   => $module->getId(),
-                'name' => $module->getName(),
-                'icon' => $module->getIcon(),
+                'id'      => $module->getId(),
+                'name'    => $module->getName(),
+                'icon'    => $module->getIcon(),
+                'options' => $module->getOptions(),
             ],
         ], Response::HTTP_CREATED);
     }
@@ -83,6 +85,10 @@ class ModuleController extends AbstractController
             $module->setIcon($data['icon']);
         }
 
+        if (isset($data['options'])) {
+            $module->setOptions($data['options']);
+        }
+
         $errors = $validator->validate($module);
 
         if (count($errors) > 0) {
@@ -99,9 +105,10 @@ class ModuleController extends AbstractController
         return $this->json([
             'message' => 'Module updated successfully!',
             'module'  => [
-                'id'   => $module->getId(),
-                'name' => $module->getName(),
-                'icon' => $module->getIcon(),
+                'id'      => $module->getId(),
+                'name'    => $module->getName(),
+                'icon'    => $module->getIcon(),
+                'options' => $module->getOptions(),
             ],
         ], Response::HTTP_OK);
     }
