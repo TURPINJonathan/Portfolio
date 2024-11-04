@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\SkillRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,27 +17,36 @@ class Skill
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['skill:read', 'project:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true, type: 'string')]
     #[Assert\NotBlank]
-    #[Groups(['skill:read', 'skill:write'])]
+    #[Groups(['skill:read', 'skill:write', 'project:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, type: 'string')]
     #[Assert\NotBlank]
-    #[Groups(['skill:read', 'skill:write'])]
+    #[Groups(['skill:read', 'skill:write', 'project:read'])]
     private ?string $icon = null;
 
     #[ORM\Column(length: 255, type: 'string')]
     #[Assert\NotBlank]
     #[Assert\Regex(pattern: '/^#/')]
-    #[Groups(['skill:read', 'skill:write'])]
+    #[Groups(['skill:read', 'skill:write', 'project:read'])]
     private ?string $color = null;
 
     #[ORM\Column(nullable: true, type: 'boolean')]
-    #[Groups(['skill:read', 'skill:write'])]
+    #[Groups(['skill:read', 'skill:write', 'project:read'])]
     private ?bool $isHardSkill = null;
+
+    #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'skills')]
+    private Collection $projects;
+
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +97,33 @@ class Skill
     public function setIsHardSkill(bool $isHardSkill): static
     {
         $this->isHardSkill = $isHardSkill;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    public function addProject(Project $project): static
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects->add($project);
+            $project->addSkill($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): static
+    {
+        if ($this->projects->removeElement($project)) {
+            $project->removeSkill($this);
+        }
 
         return $this;
     }
