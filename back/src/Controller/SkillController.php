@@ -65,7 +65,7 @@ class SkillController extends AbstractController
             return new Response('Skill not found', Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($skill);
+        return $this->json($skill, Response::HTTP_OK, [], ['groups' => 'skill:read']);
     }
 
     #[Route('/update/{id}', name: 'app_skill_update', methods: ['PUT'])]
@@ -142,6 +142,6 @@ class SkillController extends AbstractController
     {
         $skills = $entityManager->getRepository(Skill::class)->findAll();
 
-        return $this->json($skills);
+        return $this->json($skills, Response::HTTP_OK, [], ['groups' => 'skill:read']);
     }
 }
