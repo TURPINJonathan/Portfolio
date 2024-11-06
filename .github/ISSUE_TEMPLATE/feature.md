@@ -2,8 +2,9 @@
 name: Feature
 about: Suggérer une idée pour ce projet
 title: "[FEATURE] - "
-labels: enhancement
-assignees: ''
+assignees: 'TURPINJonathan'
+projet: 'portfolio'
+status: 'Todo'
 ---
 
 **Utilisateur** | **Objectif** | **Raison**
