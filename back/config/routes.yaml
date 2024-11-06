@@ -2,3 +2,6 @@ controllers:
     resource: ../src/Controller/
     type: attribute
     prefix: /api
+
+auth:
+    resource: auth.yaml
