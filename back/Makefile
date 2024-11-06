@@ -64,3 +64,6 @@ add: ## Run PHP CS Fixer with fix
 	@git add -A
 	@if [ -z "$(filter-out $@,$(MAKECMDGOALS))" ]; then echo "Commit message is required. Use 'make add \"Your commit message\"'"; exit 1; fi
 	@git commit -m "$(filter-out $@,$(MAKECMDGOALS))"
+
+%:
+	@:
