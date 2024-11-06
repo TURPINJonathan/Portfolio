@@ -32,3 +32,4 @@ phpstan.neon
 /config/jwt/*.pem
 /config/jwt/*.txt
 ###< lexik/jwt-authentication-bundle ###
+config/jwt/passphrase.txt
