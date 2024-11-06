@@ -52,3 +52,15 @@ cs: ## Run PHP CS Fixer
 
 cs-fix: ## Run PHP CS Fixer with fix
 	@vendor/bin/php-cs-fixer fix
+
+add: ## Run PHP CS Fixer with fix
+	@$(MAKE) cs-fix
+	@if [ $$? -ne 0 ]; then echo "PHP CS Fixer failed"; exit 1; fi
+	@$(MAKE) stan
+	@if [ $$? -ne 0 ]; then echo "PHPStan failed"; exit 1; fi
+	@$(MAKE) test
+	@if [ $$? -ne 0 ]; then echo "Tests failed"; exit 1; fi
+	@echo "All checks passed and files added to git"
+	@git add -A
+	@if [ -z "$(filter-out $@,$(MAKECMDGOALS))" ]; then echo "Commit message is required. Use 'make add \"Your commit message\"'"; exit 1; fi
+	@git commit -m "$(filter-out $@,$(MAKECMDGOALS))"
