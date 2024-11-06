@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Repository\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,31 +17,35 @@ class Skill
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[Groups(['skill:read', 'project:read'])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, unique: true, type: 'string')]
+    #[ORM\Column(length: 255, unique: true, type: Types::STRING)]
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Groups(['skill:read', 'skill:write', 'project:read'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, type: 'string')]
+    #[ORM\Column(length: 255, type: Types::STRING)]
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Groups(['skill:read', 'skill:write', 'project:read'])]
     private ?string $icon = null;
 
-    #[ORM\Column(length: 255, type: 'string')]
+    #[ORM\Column(length: 255, type: Types::STRING)]
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Assert\Regex(pattern: '/^#/')]
     #[Groups(['skill:read', 'skill:write', 'project:read'])]
     private ?string $color = null;
 
-    #[ORM\Column(nullable: true, type: 'boolean')]
+    #[ORM\Column(nullable: true, type: Types::BOOLEAN)]
     #[Groups(['skill:read', 'skill:write', 'project:read'])]
     private ?bool $isHardSkill = null;
 
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'skills')]
+    #[Groups(['skill:read'])]
     private Collection $projects;
 
     public function __construct()

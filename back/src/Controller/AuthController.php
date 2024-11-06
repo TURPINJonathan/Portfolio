@@ -16,7 +16,7 @@ class AuthController extends AbstractController
     public function login(UserInterface $user): JsonResponse
     {
         return $this->json([
-            'user' => $user->getUserIdentifier(),
+            'user'  => $user->getUserIdentifier(),
             'roles' => $user->getRoles(),
         ]);
     }
