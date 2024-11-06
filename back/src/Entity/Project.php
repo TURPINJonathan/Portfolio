@@ -9,8 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Validation;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
@@ -18,13 +18,14 @@ class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    #[Groups(['project:read'])]
+    #[ORM\Column(type: Types::INTEGER)]
+    #[Groups(['project:read', 'skill:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true, type: Types::STRING)]
     #[Assert\NotBlank]
-    #[Groups(['project:read', 'project:write'])]
+    #[Assert\NotNull]
+    #[Groups(['project:read', 'project:write', 'skill:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true, type: Types::STRING)]
@@ -37,6 +38,8 @@ class Project
     private ?string $subtitle = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
     #[Groups(['project:read', 'project:write'])]
     private ?string $description = null;
 

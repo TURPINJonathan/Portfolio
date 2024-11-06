@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\ModuleRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -22,21 +23,23 @@ class Module
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     #[Groups(['module:read'])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, unique: true, type: 'string')]
+    #[ORM\Column(length: 255, unique: true, type: Types::STRING)]
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Groups(['module:read', 'module:write'])]
     private ?string $name = null;
 
-    #[ORM\Column(length: 50, type: 'string')]
+    #[ORM\Column(length: 50, type: Types::STRING)]
     #[Assert\NotBlank]
+    #[Assert\NotNull]
     #[Groups(['module:read', 'module:write'])]
     private ?string $icon = null;
 
-    #[ORM\Column(nullable: true, type: 'json')]
+    #[ORM\Column(nullable: true, type: Types::JSON)]
     #[Groups(['module:read', 'module:write'])]
     private ?array $options = null;
 
