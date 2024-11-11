@@ -1,7 +1,7 @@
 import pluginVitest from '@vitest/eslint-plugin';
 import vueTsEslintConfig from '@vue/eslint-config-typescript';
 import pluginCypress from 'eslint-plugin-cypress/flat';
-import pluginImport from 'eslint-plugin-import'; // Ajoutez cette ligne
+import pluginImport from 'eslint-plugin-import';
 import pluginVue from 'eslint-plugin-vue';
 
 const INLINE_ELEMENTS = ['a', 'abbr', 'acronym', 'b', 'bdo', 'big', 'br', 'button', 'cite', 'code', 'dfn', 'em', 'i', 'img', 'input', 'kbd', 'label', 'map', 'object', 'output', 'q', 'samp', 'script', 'select', 'small', 'span', 'strong', 'sub', 'sup', 'time', 'tt', 'var'];
@@ -35,7 +35,8 @@ export default [
 
   {
     plugins: {
-      import: pluginImport, // Ajoutez cette ligne
+      import: pluginImport,
+      vue: pluginVue,
     },
     rules: {
       'no-console': 'error',
@@ -84,6 +85,11 @@ export default [
         'ignores': ['pre', 'textarea', ...INLINE_ELEMENTS],
         'allowEmptyLines': false,
       }],
+      'vue/max-attributes-per-line': ['error', {
+        'singleline': 1,
+        'multiline': 1,
+      }],
+      'vue/html-indent': ['error', 2],
     },
   },
 ];
