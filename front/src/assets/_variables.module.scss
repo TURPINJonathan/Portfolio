@@ -1,0 +1,21 @@
+/* COLORS */
+$color-dark: #333;
+$color-light: #f5f5f5;
+$color-linkedin: #0077b5;
+$color-github: #333;
+$color-email: rgb(206 177 15);
+
+/* TYPOGRAPHY */
+$font-main: 'Roboto', sans-serif;
+
+:root {
+  /* COLORS */
+  --color-dark: #{$color-dark};
+  --color-light: #{$color-light};
+  --color-linkedin: #{$color-linkedin};
+  --color-github: #{$color-github};
+  --color-email: #{$color-email};
+
+  /* TYPOGRAPHY */
+  --font-main: #{$font-main};
+}

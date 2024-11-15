@@ -37,5 +37,7 @@ module.exports = {
     'selector-pseudo-element-no-unknown': true,
     'media-feature-name-no-unknown': true,
     'no-invalid-double-slash-comments': true,
+    'scss/dollar-variable-colon-space-after': 'at-least-one-space',
+    'scss/dollar-variable-colon-space-before': 'never',
   },
 };

@@ -8,6 +8,7 @@ import '@fortawesome/fontawesome-pro/css/solid.css';
 import '@fortawesome/fontawesome-pro/css/regular.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fad } from '@fortawesome/pro-duotone-svg-icons';
 import { fal } from '@fortawesome/pro-light-svg-icons';
 import { far } from '@fortawesome/pro-regular-svg-icons';
@@ -18,4 +19,15 @@ import { fasr } from '@fortawesome/sharp-regular-svg-icons';
 import { fass } from '@fortawesome/sharp-solid-svg-icons';
 import { fast } from '@fortawesome/sharp-thin-svg-icons';
 
-library.add(fad, fal, far, fas, fat, fasl, fasr, fass, fast);
+library.add(
+  fab,
+  fad,
+  fal,
+  far,
+  fas,
+  fat,
+  fasl,
+  fasr,
+  fass,
+  fast,
+);
