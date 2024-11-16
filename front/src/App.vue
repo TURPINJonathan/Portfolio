@@ -1,22 +1,16 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { RouterView } from 'vue-router';
+import FooterLayout from '#components/common/layout/FooterLayout.vue';
+import HeaderLayout from '#components/common/layout/HeaderLayout.vue';
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" height="125" src="@/assets/logo.svg" width="125" />
+  <HeaderLayout />
 
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">
-          Home
-        </RouterLink>
-        <RouterLink to="/about">
-          About
-        </RouterLink>
-      </nav>
-    </div>
-  </header>
+  <main>
+    <RouterView />
+  </main>
 
-  <RouterView />
+  <FooterLayout />
 </template>

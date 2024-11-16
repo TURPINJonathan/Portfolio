@@ -18,6 +18,10 @@ export default defineConfig({
       '#store': fileURLToPath(new URL('./src/store', import.meta.url)),
       '#views': fileURLToPath(new URL('./src/views', import.meta.url)),
       '#assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
+      '#utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+      '#styles': fileURLToPath(new URL('./src/styles', import.meta.url)),
+      '#constants': fileURLToPath(new URL('./src/constants', import.meta.url)),
+      '#enums': fileURLToPath(new URL('./src/enums', import.meta.url)),
     },
   },
 });

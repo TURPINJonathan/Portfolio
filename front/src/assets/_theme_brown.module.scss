@@ -1,0 +1,24 @@
+.theme-brown {
+  background-image: radial-gradient(
+      circle at 97% 32%,
+      rgb(131 131 131 / 5%) 0%,
+      rgb(131 131 131 / 5%) 50%,
+      rgb(20 20 20 / 5%) 50%,
+      rgb(20 20 20 / 5%) 100%
+    ),
+    radial-gradient(
+      circle at 61% 40%,
+      rgb(35 35 35 / 5%) 0%,
+      rgb(35 35 35 / 5%) 50%,
+      rgb(239 239 239 / 5%) 50%,
+      rgb(239 239 239 / 5%) 100%
+    ),
+    radial-gradient(
+      circle at 47% 73%,
+      rgb(122 122 122 / 5%) 0%,
+      rgb(122 122 122 / 5%) 50%,
+      rgb(5 5 5 / 5%) 50%,
+      rgb(5 5 5 / 5%) 100%
+    ),
+    linear-gradient(90deg, rgb(62 37 34), rgb(211 163 118));
+}

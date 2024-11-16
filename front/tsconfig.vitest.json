@@ -4,8 +4,21 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.vitest.tsbuildinfo",
-
     "lib": [],
-    "types": ["node", "jsdom"]
-  }
+    "types": [
+      "node",
+      "jsdom"
+    ]
+  },
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "font-awesome.ts"
+  ]
 }
