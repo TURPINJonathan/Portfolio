@@ -27,11 +27,11 @@ jobs:
 
     - name: Run ESLint
       working-directory: ./front
-      run: npm run lint
+      run: npm run lint:fix
 
     - name: Run Stylelint
       working-directory: ./front
-      run: npm run lint:css
+      run: npm run lint:css:fix
 
     # - name: Run build
     #   working-directory: ./front
