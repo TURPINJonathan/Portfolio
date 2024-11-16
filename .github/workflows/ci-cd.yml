@@ -13,25 +13,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '18'
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
 
-    - name: Install dependencies
-      working-directory: ./front
-      run: npm install --legacy-peer-deps
+      - name: Install dependencies
+        working-directory: ./front
+        run: npm install --legacy-peer-deps
 
-    - name: Run ESLint
-      working-directory: ./front
-      run: npm run lint:fix
+      - name: Run ESLint
+        working-directory: ./front
+        run: npm run lint:fix
 
-    - name: Run Stylelint
-      working-directory: ./front
-      run: npm run lint:css:fix
+      - name: Run Stylelint
+        working-directory: ./front
+        run: npm run lint:css:fix
 
     # - name: Run build
     #   working-directory: ./front
