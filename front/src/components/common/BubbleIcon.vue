@@ -1,104 +1,99 @@
 <script setup lang="ts">
-import { computed, defineEmits } from 'vue';
+import { computed, ref } from 'vue';
+import { HEXADECIMAL_TEXT_COLORS } from '#constants/colors';
 
-interface Props {
-  size?: string;
-  textColor?: string;
-  backgroundColor?: string;
-  icon?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  size: '25px',
-  textColor: '#990606',
-  backgroundColor: '#990606',
-  icon: '',
+const props = withDefaults(defineProps<{
+  textColor?: string,
+  backgroundColor: string,
+  icon: string,
+  iconClass?: string,
+}>(), {
+  iconClass: 'in',
+  textColor: HEXADECIMAL_TEXT_COLORS.BLACK,
 });
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click-on-bubble-icon']);
 
-const handleClickOnIcon = (event: MouseEvent): void => {
-  emit('click', event);
+const isBubbleIconHovered = ref<boolean>(false);
+
+const getIconStyle = computed(() => {
+  return {
+    color: isBubbleIconHovered.value ? HEXADECIMAL_TEXT_COLORS.WHITE : HEXADECIMAL_TEXT_COLORS.BLACK,
+    border: `1px solid ${props.backgroundColor}`,
+    backgroundColor: isBubbleIconHovered.value ? props.backgroundColor : HEXADECIMAL_TEXT_COLORS.WHITE,
+  };
+});
+
+const handleMouseEnter = () => {
+  isBubbleIconHovered.value = true;
 };
 
-const getIconStyle = computed((): string => {
-  let customStyle = '';
+const handleMouseLeave = () => {
+  isBubbleIconHovered.value = false;
+};
 
-  const styleProps: Partial<Record<keyof Props, string | string[]>> = {
-    size: ['width', 'height'],
-    textColor: 'color',
-    backgroundColor: 'background-color',
-  };
-
-  for (const prop in styleProps) {
-    const cssProperties = styleProps[prop as keyof Props];
-    const propValue = props[prop as keyof Props];
-    if (propValue) {
-      if (Array.isArray(cssProperties)) {
-        cssProperties.forEach(cssProperty => {
-          customStyle += `${cssProperty}: ${propValue};`;
-        });
-      } else {
-        customStyle += `${cssProperties}: ${propValue};`;
-      }
-    }
-  }
-
-  return customStyle;
-});
-
-const fontAwesomeIcon = computed((): string => props.icon);
+const handleClickOnIcon = () => {
+  emit('click-on-bubble-icon');
+};
 </script>
 
 <template>
-  <div
-    class="icon-container"
-    :style="getIconStyle"
-    @click="handleClickOnIcon"
-  >
-    <FIcon
-      class="icon"
-      :icon="fontAwesomeIcon"
-    />
-    <slot></slot>
+  <div class="icon-container">
+    <div
+      class="icon-sub-container"
+      :style="getIconStyle"
+      @click="handleClickOnIcon"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
+    >
+      <span
+        class="icon"
+        :class="props.iconClass"
+      >
+        <FIcon :icon="props.icon" />
+      </span>
+    </div>
+    <div class="name-slot">
+      <slot name="name" />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .icon-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  position: relative;
-  cursor: pointer;
+  gap: 0.5rem;
 
-  &::before {
-    position: absolute;
-    top: 0;
+  .icon-sub-container {
+    padding: 0.5rem;
     border-radius: 50%;
-    z-index: 2;
-    display: block;
-    content: '';
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to left, rgb(255 255 255 / 0%) 30%, rgb(255 255 255) 100%);
-    transform: rotate(25deg);
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.5s ease-in-out;
+    }
+  
+    .icon.in {
+      transform: rotate(0deg);
+    }
+  
+    .icon.out {
+      transform: rotate(360deg);
+    }
   }
 
-  .icon {
-    z-index: 3;
-    font-size: 0.7rem;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .icon.fa-bars {
-    transform: rotate(0deg);
-  }
-
-  .icon.fa-xmark {
-    transform: rotate(90deg);
+  .name-slot {
+    text-align: end;
+    transform: translate(0, 10px) rotate(-90deg);
+    margin-top: 1rem;
   }
 }
-
 </style>

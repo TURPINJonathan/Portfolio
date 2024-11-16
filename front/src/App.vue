@@ -8,7 +8,9 @@ import HeaderLayout from '#components/common/layout/HeaderLayout.vue';
 <template>
   <HeaderLayout />
 
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 
   <FooterLayout />
 </template>

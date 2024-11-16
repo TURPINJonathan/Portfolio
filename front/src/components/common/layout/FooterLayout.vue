@@ -1,11 +1,24 @@
 <script setup lang="ts">
 import { useDateFormat, useNow } from '@vueuse/core';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import BubbleIcon from '#components/common/BubbleIcon.vue';
+import { ROUTES } from '#constants/routes';
 
+const router = useRouter();
 const userLocale = navigator.language;
 
 const dateFormat = ref('MMMM YYYY');
 const currentDate = useDateFormat(useNow(), dateFormat.value, { locales: userLocale });
+
+const handleClickOnSocialIcon = (url: string | null, type: string | null = null): void => {
+  if (url) {
+    window.open(url, '_blank');
+  } 
+  if (type) {
+    router.push({ name: type });
+  }
+};
 </script>
 
 <template>
@@ -22,23 +35,23 @@ const currentDate = useDateFormat(useNow(), dateFormat.value, { locales: userLoc
     </div>
 
     <div class="right-container">
-      <div class="contact-item email">
-        <FIcon icon="fa fa-at" />
-      </div>
-      <a
-        class="contact-item github"
-        href="https://github.com/TURPINJonathan"
-        target="_blank"
-      >
-        <FIcon icon="fab fa-github" />
-      </a>
-      <a
-        class="contact-item linkedin"
-        href="https://www.linkedin.com/in/turpin-jonathan"
-        target="_blank"
-      >
-        <FIcon icon="fab fa-linkedin-in" />
-      </a>
+      <BubbleIcon
+        backgroundColor="rgb(206 177 15)"
+        icon="fa fa-at"
+        @click-on-bubble-icon="handleClickOnSocialIcon(null, ROUTES.CONTACT)"
+      />
+      
+      <BubbleIcon
+        backgroundColor="#333"
+        icon="fab fa-github"
+        @click-on-bubble-icon="handleClickOnSocialIcon('https://github.com/TURPINJonathan')"
+      />
+      
+      <BubbleIcon
+        backgroundColor="#0077b5"
+        icon="fab fa-linkedin-in"
+        @click-on-bubble-icon="handleClickOnSocialIcon('https://www.linkedin.com/in/turpin-jonathan')"
+      />
     </div>
   </footer>
 </template>
@@ -86,42 +99,6 @@ const currentDate = useDateFormat(useNow(), dateFormat.value, { locales: userLoc
     justify-content: flex-end;
     gap: 0.5rem;
     font-size: 1rem;
-
-    .contact-item {
-      padding: 0.5rem;
-      border-radius: 50%;
-      width: 1rem;
-      height: 1rem;
-
-      &:hover {
-        color: var(--color-light);
-        cursor: pointer;
-      }
-    }
-
-    .email {
-      border: 1px solid var(--color-email);
-
-      &:hover {
-        background-color: var(--color-email);
-      }
-    }
-
-    .github {
-      border: 1px solid var(--color-github);
-
-      &:hover {
-        background-color: var(--color-github);
-      }
-    }
-
-    .linkedin {
-      border: 1px solid var(--color-linkedin);
-
-      &:hover {
-        background-color: var(--color-linkedin);
-      }
-    }
   }
 }
 

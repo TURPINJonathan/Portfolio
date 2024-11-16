@@ -1,4 +1,8 @@
 @use './variables.module' as var;
+@use './theme_green.module' as themeGreen;
+@use './theme_blue.module' as themeBlue;
+@use './theme_brown.module' as themeBrown;
+@use './theme_orange.module' as themeOrange;
 
 body {
   font-family: var.$font-main;
@@ -6,4 +10,18 @@ body {
   padding: 0;
   background-color: var.$color-light;
   color: var.$color-dark;
+  height: 100dvh;
+  max-height: 100dvh;
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    max-height: 100svh;
+
+    main {
+      padding: 10px;
+    }
+  }
 }

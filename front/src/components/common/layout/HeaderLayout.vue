@@ -1,47 +1,32 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-// import { RouterLink } from 'vue-router';
-import BubbleIcon from '../BubbleIcon.vue';
+import { useRouter } from 'vue-router';
+import BubbleIcon from '#components/common/BubbleIcon.vue';
+import { HEXADECIMAL_TEXT_COLORS } from '#constants/colors';
+import { ROUTES } from '#constants/routes';
+
+const router = useRouter();
 
 const isMenuOpen = ref<boolean>(false);
-const areMenuIconsVisible = ref<boolean>(false);
+const navMenuIcons = computed(() => [
+  { backgroundColor: '#ff0000', icon: 'fas fa-home', textColor: '#ffffff', routeName: ROUTES.HOME },
+  { backgroundColor: '#00ff00', icon: 'fas fa-user', textColor: '#000000', routeName: ROUTES.HOME },
+  { backgroundColor: '#0000ff', icon: 'fas fa-cog', textColor: '#ffffff', routeName: ROUTES.HOME },
+  { backgroundColor: '#ffff00', icon: 'fas fa-sign-out-alt', textColor: '#000000', routeName: ROUTES.HOME },
+]);
 
 const navMainIcon = computed((): string => isMenuOpen.value ? 'fas fa-xmark' : 'fas fa-bars');
-const navMenuIcons = computed((): string[] => ['fas fa-home', 'fas fa-user', 'fas fa-cog', 'fas fa-sign-out-alt']);
 
-const handleClickOnMainNavIcon = (): void => {  
-  if (isMenuOpen.value) {
-    areMenuIconsVisible.value = true;
-  }
+const handleClickOnMainNavIcon = (): void => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
-const subMenuIconsClasses = computed((): string => isMenuOpen.value ? 'fade-in' : 'fade-out');
-
-const getIconPositionStyle = (index: number, totalIcons: number): Record<string, string> => {
-  const angle = (index / (totalIcons - 1)) * Math.PI;
-  const radius = 25;
-  const x = radius * Math.cos(angle);
-  const y = radius * Math.sin(angle);
-  return {
-    position: 'absolute',
-    left: `${50 + x}%`,
-    top: `${50 + y}%`,
-    transform: 'translate(-50%, -50%)',
-    opacity: '0',
-    animationDelay: `${index * 0.1}s`,
-  };
-};
-
-const handleAnimationEnd = (event: AnimationEvent): void => {
-  if (event.animationName === 'fade-in') {
-    areMenuIconsVisible.value = true;
-  } else if (event.animationName === 'fade-out') {
-    setTimeout(() => {
-      areMenuIconsVisible.value = false;
-    }, 1000);
+const handleClickOnNavIcon = (routeName: string): void => {
+  if (routeName) {
+    router.push({ name: routeName });
   }
 };
+
 </script>
 
 <template>
@@ -50,108 +35,50 @@ const handleAnimationEnd = (event: AnimationEvent): void => {
       <BubbleIcon
         :backgroundColor="'#b0b0b0'"
         :icon="navMainIcon"
+        :iconClass="isMenuOpen ? 'out' : 'in'"
         :size="'25px'"
-        :textColor="'#333333'"
-        @click="handleClickOnMainNavIcon"
+        :textColor="HEXADECIMAL_TEXT_COLORS.BLACK"
+        @click-on-bubble-icon="handleClickOnMainNavIcon"
       />
-      
+
       <div
         class="surrounding-icons"
-        :style="isMenuOpen ? 'display: block;' : 'display: none'"
-        @animationend="handleAnimationEnd"
+        :style="{ display: isMenuOpen ? 'flex' : 'none' }"
       >
         <template
-          v-for="(icon, index) in navMenuIcons"
+          v-for="(bubble, index) in navMenuIcons"
           :key="index"
         >
           <BubbleIcon
-            :backgroundColor="'#b0b0b0'"
-            class="surrounding-icon"
-            :class="subMenuIconsClasses"
-            :icon="icon"
-            :size="'25px'"
-            :style="getIconPositionStyle(index, navMenuIcons.length)"
-            :textColor="'#333333'"
-            @click="handleClickOnMainNavIcon"
+            :backgroundColor="bubble.backgroundColor"
+            :icon="bubble.icon"
+            :textColor="bubble.textColor"
+            @click-on-bubble-icon="handleClickOnNavIcon(bubble.routeName)"
           />
         </template>
       </div>
-      <!-- <RouterLink to="/">
-          Home
-        </RouterLink>
-        <RouterLink to="/about">
-          About
-        </RouterLink> -->
     </nav>
   </header>
 </template>
 
 <style scoped lang="scss">
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-@keyframes fade-out {
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  to {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0);
-  }
-
-}
-
 #header {
-  background-color: transparent;
-  padding-top: 0.5rem;
+  padding-top: 1rem;
 
   #header-nav {
     display: flex;
-    justify-content: center;
-    max-width: 10dvw;
-    max-height: 25px;
-    margin: 0 auto;
-    gap: 1rem;
-
-    .icon-container {
-      position: relative;
-      width: 100px;
-      height: 100px;
-    }
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
 
     .surrounding-icons {
-      position: absolute;
-      width: 250px;
-      height: 120px;
-      top: -13;
-      left: 50;
-      transition: opacity 0.5s ease,
-      transform 0.5s ease;
-    }
-
-    .surrounding-icon {
-      position: absolute;
-      transition: opacity 0.5s ease,
-      transform 0.5s ease;
-
-      &.fade-in {
-        animation: fade-in 0.5s forwards;
-      }
-
-      &.fade-out {
-        animation: fade-out 0.5s forwards;
-      }
+      position:absolute;
+      top: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
     }
   }
 }
