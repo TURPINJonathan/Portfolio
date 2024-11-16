@@ -48,20 +48,19 @@ router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, n
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (token) {
       const tokenExpiration: string | null = localStorage.getItem('tokenExpiration');
-      if (tokenExpiration && new Date(tokenExpiration) > new Date()) {
+      if (tokenExpiration && new Date(parseInt(tokenExpiration)) > new Date()) {
         next();
       } else {
         localStorage.removeItem('token');
         localStorage.removeItem('tokenExpiration');
-        next('/');
+        next('/login');
       }
     } else {
-      next('/');
+      next('/login');
     }
   } else {
     next();
   }
-  
 });
 
 export default router;
