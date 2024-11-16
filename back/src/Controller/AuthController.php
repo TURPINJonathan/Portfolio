@@ -15,9 +15,15 @@ class AuthController extends AbstractController
     #[Route('/login', name: 'app_auth_login', methods: ['POST'])]
     public function login(UserInterface $user): JsonResponse
     {
-        return $this->json([
+        $response = new JsonResponse([
             'user'  => $user->getUserIdentifier(),
             'roles' => $user->getRoles(),
         ]);
+
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+        return $response;
     }
 }

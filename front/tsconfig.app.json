@@ -3,7 +3,10 @@
   "include": [
     "env.d.ts",
     "src/**/*",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "./env.d.ts"
   ],
   "exclude": [
     "src/**/__tests__/*"
@@ -23,7 +26,7 @@
         "./src/router/*"
       ],
       "#store/*": [
-        "./src/store/*"
+        "./src/stores/*"
       ],
       "#views/*": [
         "./src/views/*"
@@ -42,6 +45,9 @@
       ],
       "#enums/*": [
         "./src/enums/*"
+      ],
+      "#composables/*": [
+        "./src/composables/*"
       ],
     }
   }
