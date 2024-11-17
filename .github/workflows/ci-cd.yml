@@ -21,6 +21,13 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Set CI environment variable
+        run: echo "CI=true" >> $GITHUB_ENV
+
+      - name: Copy package-ci.json to package.json
+        working-directory: ./front
+        run: cp package-ci.json package.json
+
       - name: Install dependencies
         working-directory: ./front
         run: npm install --legacy-peer-deps
