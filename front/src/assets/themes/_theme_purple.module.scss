@@ -1,0 +1,5 @@
+@use '../variables.module' as var;
+
+.theme-purple {
+  background-image: radial-gradient(circle at bottom left , var.$theme-purple-lightest, var.$theme-purple-dark);
+}

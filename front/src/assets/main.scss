@@ -1,8 +1,5 @@
 @use './variables.module' as var;
-@use './theme_green.module' as themeGreen;
-@use './theme_blue.module' as themeBlue;
-@use './theme_brown.module' as themeBrown;
-@use './theme_orange.module' as themeOrange;
+@use './themes/index' as *;
 
 body {
   font-family: var.$font-main;

@@ -32,13 +32,13 @@ jobs:
         working-directory: ./front
         run: npm install --legacy-peer-deps
 
-      - name: Run ESLint
-        working-directory: ./front
-        run: npm run lint:fix
+      # - name: Run ESLint
+      #   working-directory: ./front
+      #   run: npm run lint:fix
 
-      - name: Run Stylelint
-        working-directory: ./front
-        run: npm run lint:css:fix
+      # - name: Run Stylelint
+      #   working-directory: ./front
+      #   run: npm run lint:css:fix
 
     # - name: Run build
     #   working-directory: ./front

@@ -1,0 +1,5 @@
+@use '../variables.module' as var;
+
+.theme-green {
+  background-image: radial-gradient(circle at bottom left , var.$theme-green-lightest, var.$theme-green-dark);
+}

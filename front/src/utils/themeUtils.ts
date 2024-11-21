@@ -3,9 +3,12 @@ import { THEME } from '#constants/theme';
 export function getRandomTheme() {
   const classes = [
     THEME.BLUE,
+    THEME.CORAL,
+    THEME.GOLD,
     THEME.GREEN,
-    THEME.BROWN,
     THEME.ORANGE,
+    THEME.PURPLE,
+    THEME.TEAL
   ];
 
   function getRandomInt(max: number): number {
