@@ -2,4 +2,20 @@
 
 .theme-gold {
   background-image: radial-gradient(circle at bottom left , var.$theme-gold-lightest, var.$theme-gold-dark);
+
+  h1 {
+    background: linear-gradient(to left, var.$theme-gold-light, var.$theme-gold-dark);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .j-card {
+    border-color: var.$theme-gold-light !important;
+
+    .j-card-content {
+      background-color: rgba(var.$theme-gold-lightest, var.$theme-j-card-background-opacity);
+      color: var.$theme-gold-dark;
+    }
+  }
 }

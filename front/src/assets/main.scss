@@ -1,5 +1,6 @@
 @use './variables.module' as var;
 @use './themes/index' as *;
+@import url('https://fonts.googleapis.com/css2?family=Ephesis&display=swap');
 
 body {
   font-family: var.$font-main;

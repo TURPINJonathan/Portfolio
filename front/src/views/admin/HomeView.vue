@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import JCard from '#components/common/JCard.vue';
+
 // import { useApi } from '#composables/useApi';
 
 
@@ -10,7 +12,7 @@ const handleClick = async() => {
 </script>
 
 <template>
-  <main>
+  <JCard>
     <button @click="handleClick">CLICK ME</button>
-  </main>
+  </JCard>
 </template>

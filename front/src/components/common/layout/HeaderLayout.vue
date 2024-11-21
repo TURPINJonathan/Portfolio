@@ -64,6 +64,7 @@ const handleClickOnNavIcon = (routeName: string): void => {
 <style scoped lang="scss">
 #header {
   padding-top: 1rem;
+  max-height: 75px;
 
   #header-nav {
     display: flex;

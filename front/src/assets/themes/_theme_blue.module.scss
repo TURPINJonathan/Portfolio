@@ -2,4 +2,20 @@
 
 .theme-blue {
   background-image: radial-gradient(circle at bottom left , var.$theme-blue-lightest, var.$theme-blue-dark);
+
+  h1 {
+    background: linear-gradient(to left, var.$theme-blue-light, var.$theme-blue-dark);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .j-card {
+    border-color: var.$theme-blue-light !important;
+
+    .j-card-content {
+      background-color: rgba(var.$theme-blue-lightest, var.$theme-j-card-background-opacity);
+      color: var.$theme-blue-dark;
+    }
+  }
 }
