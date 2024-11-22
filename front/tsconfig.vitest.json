@@ -8,7 +8,20 @@
     "types": [
       "node",
       "jsdom"
-    ]
+    ],
+    "paths": {
+      "#/*": ["src/*"],
+      "#components/*": ["src/components/*"],
+      "#router/*": ["src/router/*"],
+      "#store/*": ["src/stores/*"],
+      "#views/*": ["src/views/*"],
+      "#assets/*": ["src/assets/*"],
+      "#utils/*": ["src/utils/*"],
+      "#styles/*": ["src/styles/*"],
+      "#constants/*": ["src/constants/*"],
+      "#enums/*": ["src/enums/*"],
+      "#composables/*": ["src/composables/*"]
+    }
   },
   "include": [
     "src/**/*.d.ts",
@@ -16,8 +29,6 @@
     "src/**/*.jsx",
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
-    "src/**/*.ts",
     "src/**/*.vue",
     "font-awesome.ts"
   ]
