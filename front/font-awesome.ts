@@ -10,7 +10,6 @@ import { fasr } from '@fortawesome/sharp-regular-svg-icons';
 import { fass } from '@fortawesome/sharp-solid-svg-icons';
 import { fast } from '@fortawesome/sharp-thin-svg-icons';
 
-
 library.add(
   fab,
   fad,
