@@ -8,7 +8,7 @@ import { ROUTES } from '#constants/routes';
 const router = useRouter();
 const userLocale = navigator.language;
 
-const dateFormat = ref('MMMM YYYY');
+const dateFormat = ref<string>('MMMM YYYY');
 const currentDate = useDateFormat(useNow(), dateFormat.value, { locales: userLocale });
 
 const handleClickOnSocialIcon = (url: string | null, type: string | null = null): void => {
@@ -38,18 +38,21 @@ const handleClickOnSocialIcon = (url: string | null, type: string | null = null)
       <BubbleIcon
         backgroundColor="rgb(206 177 15)"
         icon="fa fa-at"
+        bordered
         @click-on-bubble-icon="handleClickOnSocialIcon(null, ROUTES.CONTACT)"
       />
       
       <BubbleIcon
         backgroundColor="#333"
         icon="fab fa-github"
+        bordered
         @click-on-bubble-icon="handleClickOnSocialIcon('https://github.com/TURPINJonathan')"
       />
       
       <BubbleIcon
         backgroundColor="#0077b5"
         icon="fab fa-linkedin-in"
+        bordered
         @click-on-bubble-icon="handleClickOnSocialIcon('https://www.linkedin.com/in/turpin-jonathan')"
       />
     </div>
@@ -62,6 +65,7 @@ const handleClickOnSocialIcon = (url: string | null, type: string | null = null)
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
+  max-height: var(--footer-max-height);
 
   div {
     display: flex;

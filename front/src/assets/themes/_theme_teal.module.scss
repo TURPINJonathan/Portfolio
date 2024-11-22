@@ -1,0 +1,25 @@
+@use '../variables.module' as var;
+
+.theme-teal {
+  background-image: radial-gradient(circle at bottom left , var.$theme-teal-lightest, var.$theme-teal-dark);
+
+  h1 {
+    background: linear-gradient(to left, var.$theme-teal-light, var.$theme-teal-dark);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .navigator-icon.active {
+    background-color: var.$theme-teal-medium;
+  }
+  
+  .j-card {
+    border-color: var.$theme-teal-light !important;
+
+    .j-card-content {
+      background-color: rgba(var.$theme-teal-lightest, var.$theme-j-card-background-opacity);
+      color: var.$theme-teal-dark;
+    }
+  }
+}

@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import vue from '@vitejs/plugin-vue';
 import dotenv from 'dotenv';
 import { defineConfig } from 'vite';
@@ -7,12 +6,18 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 
 dotenv.config();
 
-// https://vite.dev/config/
-export default defineConfig({
+const viteConfig = defineConfig({
   plugins: [
     vue(),
     vueDevTools(),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        implementation: (await import('sass')).default,
+      },
+    },
+  },
   resolve: {
     alias: {
       '#': fileURLToPath(new URL('./src', import.meta.url)),
@@ -29,3 +34,5 @@ export default defineConfig({
     },
   },
 });
+
+export default viteConfig;

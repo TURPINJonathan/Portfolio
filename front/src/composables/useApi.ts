@@ -3,13 +3,17 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+
 import { useAuthStore } from '#store/auth';
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: import.meta.env.MODE === 'development' ? import.meta.env.VITE_API_URL_DEV : import.meta.env.VITE_API_URL_PROD,
+  baseURL:
+    import.meta.env.MODE === 'development'
+      ? import.meta.env.VITE_API_URL_DEV
+      : import.meta.env.VITE_API_URL_PROD,
   headers: {
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 });
 
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
@@ -30,7 +34,7 @@ apiClient.interceptors.response.use(
       router.push('/login');
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export function useApi() {
@@ -38,7 +42,7 @@ export function useApi() {
   const loading = ref(false);
   const error = ref<unknown>(null);
 
-  const getCall = async(url: string, config?: AxiosRequestConfig) => {
+  const getCall = async (url: string, config?: AxiosRequestConfig) => {
     loading.value = true;
     try {
       const response = await apiClient.get(url, config);
@@ -51,7 +55,11 @@ export function useApi() {
     }
   };
 
-  const postCall = async(url: string, data: Record<string, unknown>, config?: AxiosRequestConfig) => {
+  const postCall = async (
+    url: string,
+    data: Record<string, unknown>,
+    config?: AxiosRequestConfig
+  ) => {
     loading.value = true;
     try {
       const response = await apiClient.post(url, data, config);
@@ -64,7 +72,11 @@ export function useApi() {
     }
   };
 
-  const putCall = async(url: string, data: Record<string, unknown>, config?: AxiosRequestConfig) => {
+  const putCall = async (
+    url: string,
+    data: Record<string, unknown>,
+    config?: AxiosRequestConfig
+  ) => {
     loading.value = true;
     try {
       const response = await apiClient.put(url, data, config);
@@ -77,7 +89,7 @@ export function useApi() {
     }
   };
 
-  const delCall = async(url: string, config?: AxiosRequestConfig) => {
+  const delCall = async (url: string, config?: AxiosRequestConfig) => {
     loading.value = true;
     try {
       const response = await apiClient.delete(url, config);
@@ -89,8 +101,8 @@ export function useApi() {
       loading.value = false;
     }
   };
-  
-  const login = async(credentials: { email: string, password: string }) => {
+
+  const login = async (credentials: { email: string; password: string }) => {
     loading.value = true;
     try {
       const response = await apiClient.post('auth/login', credentials);
@@ -114,6 +126,6 @@ export function useApi() {
     delCall,
     login,
     loading,
-    error,
+    error
   };
 }
