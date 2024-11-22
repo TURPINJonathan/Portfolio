@@ -10,6 +10,10 @@
     -webkit-text-fill-color: transparent;
   }
   
+  .navigator-icon.active {
+    background-color: var.$theme-green-medium;
+  }
+  
   .j-card {
     border-color: var.$theme-green-light !important;
 
