@@ -46,14 +46,14 @@ const isItemActive = (routeName: string): boolean => {
 
 <style scoped lang="scss">
 #header {
-  max-height: 75px;
+  max-height: var(--header-max-height);
   padding-top: 10px;
 
   #header-nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 7px 10px;
+    padding: 7px 8px;
     width: max-content;
     margin: auto;
     border-radius: 50px;

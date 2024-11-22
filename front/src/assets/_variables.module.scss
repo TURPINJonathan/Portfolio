@@ -1,3 +1,7 @@
+/* GENERAL */
+$header-max-height: 75px;
+$footer-max-height: 155px;
+
 /* COLORS */
 $color-dark: #333;
 $color-light: #f5f5f5;
@@ -91,6 +95,10 @@ $font-main: 'Roboto', sans-serif;
 $theme-j-card-background-opacity: 0.5;
 
 :root {
+  /* GENERAL */
+  --header-max-height: #{$header-max-height};
+  --footer-max-height: #{$footer-max-height};
+
   /* COLORS */
   --color-dark: #{$color-dark};
   --color-light: #{$color-light};

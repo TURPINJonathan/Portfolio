@@ -65,7 +65,7 @@ const handleClickOnSocialIcon = (url: string | null, type: string | null = null)
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  max-height: 155px;
+  max-height: var(--footer-max-height);
 
   div {
     display: flex;

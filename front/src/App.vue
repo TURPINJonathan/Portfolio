@@ -5,7 +5,7 @@ import HeaderLayout from '#components/common/layout/HeaderLayout.vue';
 import { computed } from 'vue';
 
 const route = useRoute();
-console.log(route);
+
 const routeName = computed(() => route.name?.toString() || '');
 </script>
 
@@ -27,7 +27,7 @@ const routeName = computed(() => route.name?.toString() || '');
   display: flex;
   flex-direction: row;
   position: relative;
-  height: calc(100svh - 75px - 155px);
+  height: calc(100svh - var(--header-max-height) - var(--footer-max-height));
 
   #main-content {
     width: 90svw;
