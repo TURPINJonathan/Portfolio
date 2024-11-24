@@ -17,7 +17,7 @@
   .j-card {
     border-color: var.$theme-blue-light !important;
 
-    .j-card-content {
+    .j-card-container {
       background-color: rgba(var.$theme-blue-lightest, var.$theme-j-card-background-opacity);
       color: var.$theme-blue-dark;
     }

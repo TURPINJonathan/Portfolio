@@ -2,15 +2,17 @@ import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 
 import { useAuthStore } from '#store/auth';
+import { ROUTES } from '#/constants/routes';
 
+// @ts-ignore
+const currentEnv = import.meta.env as ImportMetaEnv;
 const apiClient: AxiosInstance = axios.create({
   baseURL:
-    import.meta.env.MODE === 'development'
-      ? import.meta.env.VITE_API_URL_DEV
-      : import.meta.env.VITE_API_URL_PROD,
+    currentEnv.MODE === 'development'
+      ? currentEnv.VITE_API_URL_DEV
+      : currentEnv.VITE_API_URL_PROD,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -30,8 +32,7 @@ apiClient.interceptors.response.use(
     if (error.response.status === axios.HttpStatusCode.Unauthorized) {
       localStorage.removeItem('token');
       localStorage.removeItem('tokenExpiration');
-      const router = useRouter();
-      router.push('/login');
+      window.location.href = ROUTES.HOME;
     }
     return Promise.reject(error);
   }
@@ -106,12 +107,18 @@ export function useApi() {
     loading.value = true;
     try {
       const response = await apiClient.post('auth/login', credentials);
+
       const token = response.data.token;
-      const tokenExpiration = new Date().getTime() + 1800 * 1000; // 1800 secondes = 30 minutes
+      const tokenExpiration = new Date().getTime() + 1800 * 1000;
+      
       localStorage.setItem('token', token);
       localStorage.setItem('tokenExpiration', tokenExpiration.toString());
+
       authStore.setToken(token);
-      return response.data;
+      authStore.setTokenExpiration(tokenExpiration.toString());
+      authStore.setEmail(credentials.email);
+
+      return response;
     } catch (err) {
       error.value = err;
       throw err;

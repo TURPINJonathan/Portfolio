@@ -18,7 +18,8 @@ class AuthController extends AbstractController
         $response = new JsonResponse([
             'user'  => $user->getUserIdentifier(),
             'roles' => $user->getRoles(),
-        ]);
+            'code'  => JsonResponse::HTTP_OK,
+        ], JsonResponse::HTTP_OK);
 
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->headers->set('Access-Control-Allow-Methods', 'POST, OPTIONS');

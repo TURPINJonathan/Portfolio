@@ -6,8 +6,18 @@ const test = ref<string>('test');
 
 <template>
   <div class="j-card">
-    <div class="j-card-content">
-      <slot />
+    <div class="j-card-container">
+      <template v-if="$slots['card-content']">
+        <div class="j-card-content">
+          <slot name="card-content"/>
+        </div>
+      </template>
+
+      <template v-if="$slots['card-footer']">
+        <div class="j-card-footer">
+          <slot name="card-footer"/>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -18,7 +28,7 @@ const test = ref<string>('test');
   border-radius: 20px;
   padding: 4px;
 
-  .j-card-content {
+  .j-card-container {
     border-radius: 16px;
     padding: 10px;
   }
