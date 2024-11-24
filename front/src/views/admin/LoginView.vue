@@ -7,6 +7,7 @@ import { useApi } from '#composables/useApi';
 import { useRouter } from 'vue-router';
 import { ROUTES_NAMES } from '#constants/routes';
 import axios from 'axios';
+import { useNotify } from '#composables/useNotify';
 
 const loginData = ref({
   email: '',
@@ -28,20 +29,27 @@ const handleSubmitForm = async() => {
   const response = await login({ email: loginData.value.email, password: loginData.value.password });
   
   if (response.status === axios.HttpStatusCode.Ok) {
-    isInputValid.value = true;
-    // TODO store navigation history
-    // TODO flash message
-    router.push({ name: ROUTES_NAMES.ADMIN_DASHBOARD });
+    onLoginSuccess();
   } else if (response.status === axios.HttpStatusCode.Unauthorized) {
-    loginData.value.email = '';
-    loginData.value.password = '';
-    // TODO flash message
-    router.push({ name: ROUTES_NAMES.HOME });
+    onLoginError();
   }
 };
 
 const handleClickOnPasswordReveal = () => {
   isPasswordRevealed.value = !isPasswordRevealed.value;
+};
+
+const onLoginSuccess = async() => {
+  isInputValid.value = true;
+  await useNotify('success', 'Bienvenue dans le back-office');
+  router.replace({ name: ROUTES_NAMES.ADMIN_DASHBOARD });
+};
+
+const onLoginError = async() => {
+  loginData.value.email = '';
+  loginData.value.password = '';
+  await useNotify('error', 'Une erreur est survenue');
+  router.replace({ name: ROUTES_NAMES.HOME });
 };
 
 const handleResetForm = () => {
