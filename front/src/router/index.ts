@@ -7,9 +7,10 @@ import type {
 
 import { ROUTES, ROUTES_NAMES } from '#constants/routes';
 import { getRandomTheme } from '#utils/themeUtils';
-import AdminDashboard from '#views/admin/DashboardView.vue'
+import AdminDashboard from '#views/admin/DashboardView.vue';
 import BackOfficeView from '#views/admin/LoginView.vue';
 import HomeView from '#views/portfolio/HomeView.vue';
+import { useNotify } from '#/composables/useNotify';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -32,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
     name: ROUTES_NAMES.ADMIN_DASHBOARD,
     component: AdminDashboard,
     meta: { requiresAuth: true }
-  } 
+  }
 ];
 
 const router = createRouter({
@@ -42,7 +43,7 @@ const router = createRouter({
 
 // Guard global
 router.beforeEach(
-  (
+  async (
     to: RouteLocationNormalized,
     from: RouteLocationNormalized,
     next: NavigationGuardNext
@@ -52,11 +53,12 @@ router.beforeEach(
       appElement.className = '';
       appElement.classList.add(getRandomTheme());
     }
+
     const token: string | null = localStorage.getItem('token');
+
     if (to.matched.some((record) => record.meta.requiresAuth)) {
       if (token) {
-        const tokenExpiration: string | null =
-          localStorage.getItem('tokenExpiration');
+        const tokenExpiration: string | null = localStorage.getItem('tokenExpiration');
         if (
           tokenExpiration &&
           new Date(parseInt(tokenExpiration)) > new Date()
@@ -65,10 +67,12 @@ router.beforeEach(
         } else {
           localStorage.removeItem('token');
           localStorage.removeItem('tokenExpiration');
-          next(ROUTES.HOME);
+
+          next({ name: ROUTES_NAMES.HOME });
         }
       } else {
-        next(ROUTES.HOME);
+        await useNotify('error', 'Cet espace est réservé aux administrateurs');
+        next({ name: ROUTES_NAMES.HOME });
       }
     } else {
       next();
