@@ -7,8 +7,8 @@ import type {
 
 import { ROUTES, ROUTES_NAMES } from '#constants/routes';
 import { getRandomTheme } from '#utils/themeUtils';
-import AdminChildView from '#views/admin/ExampleView.vue';
-import BackOfficeView from '#views/admin/HomeView.vue';
+import AdminDashboard from '#views/admin/DashboardView.vue'
+import BackOfficeView from '#views/admin/LoginView.vue';
 import HomeView from '#views/portfolio/HomeView.vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -23,18 +23,16 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
-    path: ROUTES.ADMIN,
-    name: ROUTES_NAMES.ADMIN,
+    path: ROUTES.ADMIN_LOGIN,
+    name: ROUTES_NAMES.ADMIN_LOGIN,
     component: BackOfficeView,
-    children: [
-      {
-        path: ROUTES.ADMIN_CHILD,
-        name: ROUTES_NAMES.ADMIN_CHILD,
-        component: AdminChildView,
-        meta: { requiresAuth: true }
-      }
-    ]
-  }
+  },
+  {
+    path: ROUTES.ADMIN_DASHBOARD,
+    name: ROUTES_NAMES.ADMIN_DASHBOARD,
+    component: AdminDashboard,
+    meta: { requiresAuth: true }
+  } 
 ];
 
 const router = createRouter({
@@ -67,10 +65,10 @@ router.beforeEach(
         } else {
           localStorage.removeItem('token');
           localStorage.removeItem('tokenExpiration');
-          next('/login');
+          next(ROUTES.HOME);
         }
       } else {
-        next('/login');
+        next(ROUTES.HOME);
       }
     } else {
       next();

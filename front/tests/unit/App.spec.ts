@@ -15,8 +15,8 @@ const routes = [
     component: HomeView
   },
   {
-    path: ROUTES.ADMIN,
-    name: ROUTES_NAMES.ADMIN,
+    path: /login,
+    name: /login,
     component: BackOfficeView
   }
 ];
@@ -28,7 +28,7 @@ const router = createRouter({
 
 describe('App.vue', () => {
   beforeEach(async () => {
-    router.push(ROUTES.ADMIN);
+    router.push(/login);
     await router.isReady();
   });
 
@@ -44,7 +44,7 @@ describe('App.vue', () => {
 
     const h1 = wrapper.find('#main-title');
     expect(h1.exists()).toBe(true);
-    expect(h1.text()).toBe(ROUTES_NAMES.ADMIN);
+    expect(h1.text()).toBe(/login);
   });
 
   it('renders FIcon component', () => {

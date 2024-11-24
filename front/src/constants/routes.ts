@@ -1,13 +1,13 @@
 export const ROUTES = {
   HOME: '/',
   CONTACT: '/contact',
-  ADMIN: '/admin',
-  ADMIN_CHILD: '/admin/example'
+  ADMIN_LOGIN: '/login',
+  ADMIN_DASHBOARD: '/admin/dashboard'
 };
 
 export const ROUTES_NAMES = {
   HOME: 'Home',
   CONTACT: 'Contact',
-  ADMIN: 'Back Office',
-  ADMIN_CHILD: 'AdminChild'
+  ADMIN_LOGIN: 'Connexion',
+  ADMIN_DASHBOARD: 'Dashboard'
 };

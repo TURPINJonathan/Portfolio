@@ -17,7 +17,7 @@
   .j-card {
     border-color: var.$theme-teal-light !important;
 
-    .j-card-content {
+    .j-card-container {
       background-color: rgba(var.$theme-teal-lightest, var.$theme-j-card-background-opacity);
       color: var.$theme-teal-dark;
     }

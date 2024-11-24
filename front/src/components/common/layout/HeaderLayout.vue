@@ -8,9 +8,9 @@ const router = useRouter();
 
 const navMenuIcons = computed(() => [
   { backgroundColor: '#ff0000', icon: 'fas fa-home', textColor: '#ffffff', routeName: ROUTES_NAMES.HOME },
-  { backgroundColor: '#00ff00', icon: 'fas fa-user', textColor: '#000000', routeName: ROUTES_NAMES.ADMIN },
+  { backgroundColor: '#00ff00', icon: 'fas fa-user', textColor: '#000000', routeName: ROUTES_NAMES.ADMIN_LOGIN },
   { backgroundColor: '#0000ff', icon: 'fas fa-cog', textColor: '#ffffff', routeName: ROUTES_NAMES.CONTACT },
-  { backgroundColor: '#ffff00', icon: 'fas fa-sign-out-alt', textColor: '#000000', routeName: ROUTES_NAMES.ADMIN_CHILD },
+  { backgroundColor: '#ffff00', icon: 'fas fa-sign-out-alt', textColor: '#000000', routeName: ROUTES_NAMES.ADMIN_DASHBOARD },
 ]);
 
 const handleClickOnNavIcon = (routeName: string): void => {
