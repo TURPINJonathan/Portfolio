@@ -14,6 +14,7 @@ import router from './router';
 import { getRandomTheme } from '#utils/themeUtils';
 
 const app = createApp(App);
+
 app.component('FIcon', FontAwesomeIcon);
 
 app.use(createPinia());

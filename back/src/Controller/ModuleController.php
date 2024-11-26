@@ -63,6 +63,10 @@ class ModuleController extends AbstractController
             return new Response('Module not found', Response::HTTP_NOT_FOUND);
         }
 
+        if ($module->isIsAdminModule()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         return $this->json($module);
     }
 
@@ -73,6 +77,10 @@ class ModuleController extends AbstractController
 
         if (!$module) {
             return new Response('Module not found', Response::HTTP_NOT_FOUND);
+        }
+
+        if ($module->isIsAdminModule()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
         }
 
         $data = json_decode($request->getContent(), true);
@@ -122,6 +130,10 @@ class ModuleController extends AbstractController
             return new Response('Module not found', Response::HTTP_NOT_FOUND);
         }
 
+        if ($module->isIsAdminModule()) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        }
+
         $entityManager->remove($module);
         $entityManager->flush();
 
@@ -134,6 +146,16 @@ class ModuleController extends AbstractController
     public function list(EntityManagerInterface $entityManager): Response
     {
         $modules = $entityManager->getRepository(Module::class)->findAll();
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $modules = array_filter($modules, function (Module $module) {
+                return !$module->isIsAdminModule();
+            });
+        }
+
+        usort($modules, function (Module $a, Module $b) {
+            return strcmp($a->getName(), $b->getName());
+        });
 
         return $this->json($modules);
     }

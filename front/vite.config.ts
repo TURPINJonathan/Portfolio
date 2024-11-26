@@ -30,6 +30,7 @@ const viteConfig = defineConfig({
       '#styles': fileURLToPath(new URL('./src/styles', import.meta.url)),
       '#constants': fileURLToPath(new URL('./src/constants', import.meta.url)),
       '#enums': fileURLToPath(new URL('./src/enums', import.meta.url)),
+      '#types': fileURLToPath(new URL('./src/types', import.meta.url)),
       '#composables': fileURLToPath(new URL('./src/composables', import.meta.url)),
     },
   },

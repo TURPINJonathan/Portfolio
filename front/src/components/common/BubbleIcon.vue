@@ -4,7 +4,7 @@ import { HEXADECIMAL_TEXT_COLORS } from '#constants/colors';
 
 const props = withDefaults(defineProps<{
   textColor?: string,
-  backgroundColor: string,
+  backgroundColor?: string,
   bordered?: boolean,
   icon: string,
   isItemActive?: boolean,

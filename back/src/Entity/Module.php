@@ -43,6 +43,11 @@ class Module
     #[Groups(['module:read', 'module:write'])]
     private ?array $options = null;
 
+    #[ORM\Column(nullable: false, type: Types::BOOLEAN)]
+    #[Assert\NotNull]
+    #[Groups(['module:read', 'module:write'])]
+    private ?bool $isAdminModule = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,5 +108,17 @@ class Module
                 }
             }
         }
+    }
+
+    public function isIsAdminModule(): ?bool
+    {
+        return $this->isAdminModule;
+    }
+
+    public function setIsAdminModule(bool $isAdminModule): static
+    {
+        $this->isAdminModule = $isAdminModule;
+
+        return $this;
     }
 }

@@ -1,43 +1,66 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import BubbleIcon from '#components/common/BubbleIcon.vue';
 import { ROUTES_NAMES } from '#constants/routes';
+import { useModuleStore } from '#store/moduleStore';
+import type { Module } from '#types/module';
+import { useApi } from '#composables/useApi';
+import { useNotify } from '#composables/useNotify';
+import { useAuthStore } from '#store/authStore';
 
 const router = useRouter();
+const moduleStore = useModuleStore();
+const authStore = useAuthStore();
+const { logout } = useApi();
 
-const navMenuIcons = computed(() => [
-  { backgroundColor: '#ff0000', icon: 'fas fa-home', textColor: '#ffffff', routeName: ROUTES_NAMES.HOME },
-  { backgroundColor: '#00ff00', icon: 'fas fa-user', textColor: '#000000', routeName: ROUTES_NAMES.ADMIN_LOGIN },
-  { backgroundColor: '#0000ff', icon: 'fas fa-cog', textColor: '#ffffff', routeName: ROUTES_NAMES.CONTACT },
-  { backgroundColor: '#ffff00', icon: 'fas fa-sign-out-alt', textColor: '#000000', routeName: ROUTES_NAMES.ADMIN_DASHBOARD },
-]);
-
-const handleClickOnNavIcon = (routeName: string): void => {
+const handleClickOnNavIcon = async(routeName: string): Promise<void> => {
   if (routeName) {
-    router.push({ name: routeName });
+    if (routeName === ROUTES_NAMES.LOGOUT) {
+      await authStore.clearToken();
+      await useNotify('success', 'Vous avez été déconnecté');
+      await logout();
+    } else {
+      router.push({ name: routeName });
+    }
   }
 };
 
 const isItemActive = (routeName: string): boolean => {
   return router.currentRoute.value.name === routeName;
 };
+
+const modulesList = computed((): Module[] => moduleStore.getModulesList);
+
+const fetchModules = async (): Promise<void> => {
+  await moduleStore.fetchModulesList();
+};
+
+onMounted(async() => {
+  fetchModules();
+
+  window.addEventListener('user-logged-in', moduleStore.fetchModulesList);
+  window.addEventListener('user-logged-out', moduleStore.fetchModulesList);;
+});
+
+onUnmounted(() => {
+  window.removeEventListener('user-logged-in', moduleStore.fetchModulesList);
+  window.removeEventListener('user-logged-out', moduleStore.fetchModulesList);
+});
 </script>
 
 <template>
   <header id="header">
     <nav id="header-nav">
       <template
-        v-for="(bubble, index) in navMenuIcons"
-        :key="index"
+        v-for="(module) in modulesList"
+        :key="module.id"
       >
         <BubbleIcon
-          :backgroundColor="bubble.backgroundColor"
-          :icon="bubble.icon"
-          :textColor="bubble.textColor"
-          :is-item-active="isItemActive(bubble.routeName)"
+          :icon="module.icon"
+          :is-item-active="isItemActive(module.name)"
           navigator
-          @click-on-bubble-icon="handleClickOnNavIcon(bubble.routeName)"
+          @click-on-bubble-icon="handleClickOnNavIcon(module.name)"
         />
       </template>
     </nav>
