@@ -49,6 +49,9 @@
       "#composables/*": [
         "./src/composables/*"
       ],
+      "#types/*": [
+        "./src/types/*"
+      ],
     }
   }
 }

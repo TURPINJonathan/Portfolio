@@ -3,8 +3,9 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { ref } from 'vue';
 
-import { useAuthStore } from '#store/auth';
-import { ROUTES } from '#/constants/routes';
+import { useAuthStore } from '#store/authStore';
+import { ROUTES, ROUTES_NAMES } from '#/constants/routes';
+import { useRouter } from 'vue-router';
 
 // @ts-ignore
 const currentEnv = import.meta.env as ImportMetaEnv;
@@ -39,9 +40,9 @@ apiClient.interceptors.response.use(
 );
 
 export function useApi() {
-  const authStore = useAuthStore();
   const loading = ref(false);
   const error = ref<unknown>(null);
+  const router = useRouter();
 
   const getCall = async (url: string, config?: AxiosRequestConfig) => {
     loading.value = true;
@@ -104,7 +105,9 @@ export function useApi() {
   };
 
   const login = async (credentials: { email: string; password: string }) => {
+    const authStore = useAuthStore();
     loading.value = true;
+
     try {
       const response = await apiClient.post('auth/login', credentials);
 
@@ -117,6 +120,8 @@ export function useApi() {
       authStore.setToken(token);
       authStore.setTokenExpiration(tokenExpiration.toString());
       authStore.setEmail(credentials.email);
+      
+      window.dispatchEvent(new CustomEvent('user-logged-in'));
 
       return response;
     } catch (err) {
@@ -126,12 +131,24 @@ export function useApi() {
       loading.value = false;
     }
   };
+
+  const logout = () => {
+    const authStore = useAuthStore();
+
+    authStore.clearToken();
+
+    window.dispatchEvent(new CustomEvent('user-logged-out'));
+    
+    router.push({ name: ROUTES_NAMES.HOME });
+  }
+
   return {
     getCall,
     postCall,
     putCall,
     delCall,
     login,
+    logout,
     loading,
     error
   };

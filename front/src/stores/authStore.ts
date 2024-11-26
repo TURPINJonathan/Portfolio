@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, type Ref } from 'vue';
+import { computed, ref, type Ref } from 'vue';
 
 interface UserState {
   token: string | null;
@@ -12,6 +12,9 @@ export const useAuthStore = defineStore('User', () => {
     const token: Ref<UserState['token']> = ref(localStorage.getItem('token') || null);
     const tokenExpiration: Ref<UserState['tokenExpiration']> = ref(localStorage.getItem('tokenExpiration') || null);
     const email: Ref<UserState['email']> = ref(null);
+
+    // GETTERS
+    const isLoggedIn = computed(() => !!token.value);
     
     // ACTIONS
     function setToken(newToken: string): void {
@@ -39,6 +42,7 @@ export const useAuthStore = defineStore('User', () => {
       token,
       tokenExpiration,
       email,
+      isLoggedIn,
       setToken,
       setTokenExpiration,
       setEmail,
